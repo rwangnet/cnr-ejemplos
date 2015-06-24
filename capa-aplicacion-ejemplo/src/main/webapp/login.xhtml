@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:p="http://primefaces.org/ui"
+   template="/WEB-INF/templates/simple.xhtml">
+   <ui:define name="content">
+      <h:form id="loginForm">
+         <h2>Inicia Sesión</h2>
+            <p:panel>
+            <f:facet name="header">Login</f:facet>
+
+            <p>Iniciar sesión de usuario</p>
+                <p:panelGrid columns="3">
+                    <p:outputLabel style="font-weight:bold;" for="username">Username</p:outputLabel>
+                    <p:inputText id="username" value="#{identity.username}">
+                        <f:validateBean />
+                    </p:inputText>
+                    <p:message for="username" style="color:red"/>
+                    
+                    <p:outputLabel style="font-weight:bold;" for="password">Password</p:outputLabel>
+                    <p:password id="password" value="#{identity.password}" feedback="true"
+                    promptLabel="Ingrese Contraseña" weakLabel="Nivel de Contraseña: Debil"
+                    goodLabel="Nivel de Contraseña: Normal" strongLabel="Nivel de Contraseña: Excelente">
+                        <f:validateBean />
+                    </p:password>
+                    <p:message for="password" style="color:red"/>
+                </p:panelGrid>
+
+            <p style="color:blue">
+              <i>Nota - </i> Puedes iniciar sesión con username 'admin' y password '1234'.
+            </p>
+
+        </p:panel>
+
+        <div class="actionButtons">
+            <h:commandButton id="submit" value="Login" action="#{authenticator.authenticate}"/>
+        </div>
+      </h:form>
+   </ui:define>
+</ui:composition>

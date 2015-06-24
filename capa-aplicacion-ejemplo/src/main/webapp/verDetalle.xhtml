@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/simple.xhtml">
+	<ui:define name="content">
+       <br />
+		<p:panel>
+			<p>
+				<h:link outcome="home" value="volver" id="volver" />
+			</p>
+			<f:facet name="header">
+				<h:outputText value="Ver detalle #{producto.producto}" /> 
+			</f:facet>
+
+			<h:panelGrid columns="2">
+				<p:outputLabel style="font-weight:bold" value="Id: " />
+			    <h:outputText value="#{producto.id}" />
+
+				<p:outputLabel style="font-weight:bold" value="Producto: " />
+			    <h:outputText value="#{producto.producto}" />
+			    
+			    <p:outputLabel style="font-weight:bold" value="Descripción: " />
+			    <h:outputText value="#{producto.descripcion}" />
+
+				<p:outputLabel style="font-weight:bold" value="Precio: " />
+			    <h:outputText value="#{producto.precio}" />
+			    
+				<p:outputLabel style="font-weight:bold" value="Categoria: " />
+			    <h:outputText value="#{producto.categoria.nombre}" />
+			</h:panelGrid>
+		</p:panel>
+	</ui:define>
+
+</ui:composition>

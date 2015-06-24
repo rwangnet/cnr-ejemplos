@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/simple.xhtml">
+	<ui:define name="content">
+		<br />
+		<p:panel>
+			<p>
+				<h:link outcome="home" value="volver" id="volver" />
+			</p>
+			<f:facet name="header">
+				<h:outputText value="#{producto.id>0?'Editar':'Crear'} Producto" />
+			</f:facet>
+			<h:form id="productoForm">
+				<h:inputHidden id="id" value="#{producto.id}" />
+
+				<fieldset>
+					<legend>
+						<h:outputText value="#{producto.id>0?'Editar':'Crear'} Producto" />
+					</legend>
+					<p:panelGrid columns="3">
+
+						<p:outputLabel id="categoriaLabel" style="font-weight:bold;"
+							value="Categoria:" for="categoria" />
+						<p:selectOneMenu id="categoria" value="#{producto.categoria}">
+							<f:selectItem id="item0" itemLabel="--- Seleccione ---"
+								itemValue="#{null}" />
+							<f:selectItems value="#{categorias}" var="cat"
+								itemLabel="#{cat.nombre}" />
+							<f:converter binding="#{categoriaConverter}" />
+							<f:validateBean />
+						</p:selectOneMenu>
+						<p:message for="categoria" style="color:red" />
+
+						<p:outputLabel id="productoLabel" style="font-weight:bold;"
+							value="Producto:" for="producto" />
+						<p:inputText id="producto" value="#{producto.producto}">
+							<f:validateBean />
+						</p:inputText>
+						<p:message for="producto" style="color:red" />
+						<p:outputLabel id="descripcionLabel" style="font-weight:bold;"
+							value="Descripción:" for="descripcion" />
+						<p:inputText id="descripcion" value="#{producto.descripcion}">
+							<f:validateBean />
+						</p:inputText>
+						<p:message for="descripcion" style="color:red" />
+
+						<p:outputLabel id="precioLabel" style="font-weight:bold;"
+							value="Precio:" for="precio" />
+						<p:inputText id="precio" value="#{producto.precio}">
+							<f:validateBean />
+						</p:inputText>
+						<p:message for="precio" style="color:red" />
+
+					</p:panelGrid>
+				</fieldset>
+
+				<div class="actionButtons">
+					<h:commandButton id="crear"
+						value="#{producto.id>0?'Editar':'Crear'} Producto"
+						action="#{pcontroller.guardar}" />
+				</div>
+			</h:form>
+			<div style="clear: both">
+				<span class="required">*</span>campos requeridos
+			</div>
+		</p:panel>
+	</ui:define>
+
+</ui:composition>

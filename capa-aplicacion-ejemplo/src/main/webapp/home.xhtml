@@ -1,68 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-   xmlns:ui="http://java.sun.com/jsf/facelets"
-   xmlns:f="http://java.sun.com/jsf/core"
-   xmlns:h="http://java.sun.com/jsf/html"
-   template="/WEB-INF/templates/default.xhtml">
-   <ui:define name="content">
-      <h1>Hello World!</h1>
-      <p>Your CDI bean <code>HelloWorld</code> says <span style="color: blue;">#{helloWorld.text}</span> using the Unified EL.</p>
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/simple.xhtml">
+	<ui:define name="content">
+		<h1>Hello World!</h1>
+		<p>
+			Your CDI bean
+			<code>HelloWorld</code>
+			says <span style="color: blue;">#{helloWorld.text}</span> using the
+			Unified EL.
+		</p>
+		<p>
+			<h:link outcome="crearForm" value="nuevo producto (+)" id="crearForm" />
+		</p>
+		<p:panel>
+			<f:facet name="header">Lista de ítems Disponibles</f:facet>
 
-      <h:form id="bv">
-         <h2>Bean Validation examples</h2>
-         <p>Enforces annotation-based constraints defined on the model class.</p>
-         <table>
-            <tr>
-               <th style="text-align: right;">
-                  <h:outputLabel for="letters" value="Letters:"/>
-               </th>
-               <td>
-                  <h:inputText id="letters" value="#{helloWorld.letters}"/>
-                  <h:message for="letters" errorClass="invalid"/>
-               </td>
-            </tr>
-            <tr>
-               <th style="text-align: right;">
-                  <h:outputLabel for="numbers" value="Numbers:"/>
-               </th>
-               <td>
-                  <h:inputText id="numbers" value="#{helloWorld.numbers}"/>
-                  <h:message for="numbers" errorClass="invalid"/>
-               </td>
-            </tr>
-            <tr>
-               <th style="text-align: right;">
-                  <h:outputLabel for="email" value="Email:"/>
-               </th>
-               <td>
-                  <h:inputText id="email" value="#{helloWorld.email}"/>
-                  <h:message for="email" errorClass="invalid"/>
-               </td>
-            </tr>
-         </table>
-         <p>
-            <h:commandButton id="check" action="check" value="Check values"/>
-            <h:outputText value=" All clear!" rendered="#{facesContext.postback and empty facesContext.messageList}" style="color: green;"/>
-         </p>
-      </h:form>
-      <h2>Widgets</h2>
-      <h:dataTable var="_widget" value="#widgets">
-         <h:column>
-            <f:facet name="header">Id</f:facet>
-            #{_widget.id}
-         </h:column>
-         <h:column>
-            <f:facet name="header">Part Number</f:facet>
-            #{_widget.partNumber}
-         </h:column>
-         <h:column>
-            <f:facet name="header">Name</f:facet>
-            #{_widget.name}
-         </h:column>
-         <h:column>
-            <f:facet name="header">Description</f:facet>
-            #{_widget.description}
-         </h:column>
-      </h:dataTable>
-   </ui:define>
+			<h:outputText value="No existen productos en la base de datos"
+				rendered="#{empty productos}" />
+			<h:form id="productoListForm">
+				<p:dataTable id="productoList" var="_producto"
+					value="#{productos}" rendered="#{not empty productos}"
+					cellspacing="0" cellpadding="0" border="0" styleClass="grid"
+					headerClass="rowHead" footerClass="rowFoot"
+					rowClasses="rowOdd,rowEven">
+					<p:column width="15">
+						<f:facet name="header">Id</f:facet>
+						<h:link outcome="verDetalle" value="#{_producto.id}"
+							id="verDetalle">
+							<f:param name="producto_id" value="#{_producto.id}" />
+						</h:link>
+					</p:column>
+					<p:column>
+						<f:facet name="header">Producto</f:facet>
+                    #{_producto.producto}
+                </p:column>
+					<p:column>
+						<f:facet name="header">Descripción</f:facet>
+						<h:outputText value="#{_producto.descripcion}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">Precio</f:facet>
+						<h:outputText value="#{_producto.precio}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputLabel value="Categoria" />
+						</f:facet>
+						<h:outputText value="#{_producto.categoria.nombre}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="editar" />
+						</f:facet>
+						<h:link outcome="crearForm" value="editar" id="crearForm">
+							<f:param name="producto_id" value="#{_producto.id}" />
+						</h:link>
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="eliminar" />
+						</f:facet>
+						<h:commandLink action="#{pcontroller.eliminar()}"
+							onclick="return confirm('¿seguro que desea eliminar?');"
+							value="eliminar" id="productosEliminar">
+							<f:param name="producto_id" value="#{_producto.id}" />
+						</h:commandLink>
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Ver Stock" />
+						</f:facet>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</p:panel>
+		
+	</ui:define>
 </ui:composition>
