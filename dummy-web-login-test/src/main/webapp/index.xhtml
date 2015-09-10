@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
+	
+<body>
+	<ui:composition template="/WEB-INF/templates/template.xhtml">
+		<ui:define name="title">Más Vida</ui:define>
+		<ui:define name="body">
+
+			<!-- INICIO DE LA PANTALLA PRINCIPAL -->
+			<h:form id="loginId">
+			<rich:toolbar height="30" itemSeparator="line">
+			<rich:toolbarGroup>
+			<h:outputLabel>Más Vida HandsOn - Cobranza</h:outputLabel>
+			</rich:toolbarGroup>
+    		<rich:toolbarGroup location="right">
+    		<h:outputLabel>Bienvenido, #{loginMBean.username}</h:outputLabel>
+    		</rich:toolbarGroup>
+    		<rich:toolbarGroup location="right">
+    	    <h:commandButton action="#{loginMBean.logout}" value="Cerrar Sesión" />
+    		</rich:toolbarGroup>
+    		</rich:toolbar></h:form>
+    	   <h:outputText value="Hola Mundo!" />
+		</ui:define>
+	</ui:composition>
+</body>
+</html>
